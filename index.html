@@ -1,0 +1,48 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Iris Predictor</title>
+    <style>
+        body { font-family: Arial, sans-serif; margin: 40px; }
+        label { display: block; margin-top: 10px; }
+        input[type=number] { width: 80px; }
+        button { margin-top: 20px; padding: 8px 16px; }
+        #result { margin-top: 20px; font-weight: bold; }
+    </style>
+</head>
+<body>
+    <h1>Iris Flower Prediction</h1>
+    <form id="irisForm">
+        <label>Sepal Length: <input type="number" step="any" id="sepal_length" required></label>
+        <label>Sepal Width: <input type="number" step="any" id="sepal_width" required></label>
+        <label>Petal Length: <input type="number" step="any" id="petal_length" required></label>
+        <label>Petal Width: <input type="number" step="any" id="petal_width" required></label>
+        <button type="submit">Predict</button>
+    </form>
+    <div id="result"></div>
+    <script>
+        document.getElementById('irisForm').onsubmit = async function(e) {
+            e.preventDefault();
+            const features = [
+                parseFloat(document.getElementById('sepal_length').value),
+                parseFloat(document.getElementById('sepal_width').value),
+                parseFloat(document.getElementById('petal_length').value),
+                parseFloat(document.getElementById('petal_width').value)
+            ];
+            const response = await fetch('/predict', {
+                method: 'POST',
+                headers: { 'Content-Type': 'application/json' },
+                body: JSON.stringify({ features })
+            });
+            const data = await response.json();
+            if (response.ok) {
+                document.getElementById('result').textContent = 'Prediction: ' + data.prediction;
+            } else {
+                document.getElementById('result').textContent = 'Error: ' + (data.error || 'Unknown error');
+            }
+        };
+    </script>
+</body>
+</html>
