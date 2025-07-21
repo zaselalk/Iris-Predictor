@@ -28,14 +28,18 @@ The objective of the project is to to develop a machine learning model and creat
 
 ---
 
+
 ## 🗂 Project Structure
+```text
 iris-predictor/
 ├── data/
-│ └── iris.csv
+│   └── iris.csv
 ├── train_model.py
 ├── app.py
 ├── test_predict.py
+├── index.html
 └── README.md
+```
 
 ## 🔧 Installation & Setup
 
